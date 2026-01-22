@@ -40,7 +40,43 @@ supabase db push
    - `vso_organizations`
 3. Go to **Database** > **Extensions** and verify `vector` is enabled
 
-## Step 4: Get API Credentials
+## Step 4: Seed Initial Data
+
+Now that the database schema is created, seed it with categories and VSO organizations.
+
+### Option A: Using Supabase Dashboard (Recommended)
+
+1. In your Supabase project dashboard, go to **SQL Editor** (left sidebar)
+2. Click "New Query"
+3. Copy the entire contents of `supabase/seed.sql`
+4. Paste into the SQL editor
+5. Click "Run" or press Ctrl+Enter
+6. You should see success messages:
+   - "Categories inserted: 15"
+   - "VSO Organizations inserted: 6"
+
+### Option B: Using Supabase CLI
+
+If you have the Supabase CLI installed:
+
+```bash
+supabase db reset --db-url "your-database-connection-string"
+```
+
+Or run the seed file directly:
+
+```bash
+psql "your-database-connection-string" < supabase/seed.sql
+```
+
+### Verify Seed Data
+
+1. Go to **Table Editor** in the Supabase dashboard
+2. Check the `categories` table - should have 15 records
+3. Check the `vso_organizations` table - should have 6 records
+4. Verify data looks correct (names, slugs, descriptions)
+
+## Step 5: Get API Credentials
 
 1. In your Supabase project dashboard, go to **Project Settings** (gear icon)
 2. Click **API** in the left menu
@@ -48,7 +84,7 @@ supabase db push
    - **Project URL** (under "Project URL")
    - **anon/public key** (under "Project API keys")
 
-## Step 5: Update Environment Variables
+## Step 6: Update Environment Variables
 
 Update your `.env.local` file with the credentials:
 
@@ -57,9 +93,9 @@ NEXT_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
 ```
 
-Replace the placeholder values with your actual credentials from Step 4.
+Replace the placeholder values with your actual credentials from Step 5.
 
-## Step 6: Test Connection
+## Step 7: Test Connection
 
 Run the development server:
 
