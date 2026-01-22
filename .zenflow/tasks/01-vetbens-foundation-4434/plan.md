@@ -101,6 +101,7 @@ Set up Supabase project and create database schema.
 ---
 
 ### [ ] Step 3: Database Seeding - Categories & VSO Organizations
+<!-- chat-id: e40b813d-9682-4738-889c-8ce6766d0efe -->
 
 Seed reference data that doesn't change frequently.
 
