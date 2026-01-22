@@ -162,7 +162,8 @@ Generate and store embeddings for all conditions.
 
 ---
 
-### [ ] Step 6: Secondary Relationships Seeding
+### [x] Step 6: Secondary Relationships Seeding
+<!-- chat-id: fd805ab4-84ce-4cec-834b-ff8a4b568fb8 -->
 
 Manually curate initial secondary condition relationships.
 
