@@ -201,7 +201,7 @@ Build foundational UI components using Tailwind CSS 4.0.
 
 ---
 
-### [ ] Step 8: Layout Components
+### [x] Step 8: Layout Components
 <!-- chat-id: 0788a2d1-b60c-4c00-8013-cd1f398e6984 -->
 
 Create header and footer for the application.
