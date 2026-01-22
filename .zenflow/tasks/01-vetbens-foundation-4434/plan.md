@@ -140,6 +140,7 @@ Seed initial conditions with DC codes and ratings (start with 50-100 conditions)
 ---
 
 ### [ ] Step 5: Vector Embeddings Generation
+<!-- chat-id: bf876c10-34cf-49f2-a932-afdb82d98a9c -->
 
 Generate and store embeddings for all conditions.
 
