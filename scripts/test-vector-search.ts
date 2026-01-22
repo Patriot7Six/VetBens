@@ -4,11 +4,22 @@ import * as dotenv from 'dotenv';
 
 dotenv.config({ path: '.env.local' });
 
+type ConditionSearchResult = {
+  id: string;
+  name: string;
+  dc_code: string;
+  description: string;
+  category_id: string | null;
+  rating_percentages: number[];
+  similarity: number;
+};
+
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!supabaseUrl || !supabaseKey) {
   console.error('Missing Supabase credentials in .env.local');
+  console.error('Required: NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY');
   process.exit(1);
 }
 
@@ -66,7 +77,7 @@ async function testVectorSearch() {
 
   console.log(`Found ${similarConditions.length} similar conditions:\n`);
 
-  similarConditions.forEach((condition: any, index: number) => {
+  similarConditions.forEach((condition: ConditionSearchResult, index: number) => {
     console.log(`${index + 1}. ${condition.name} (DC ${condition.dc_code})`);
     console.log(`   Similarity: ${(condition.similarity * 100).toFixed(2)}%`);
     console.log(`   Description: ${condition.description.substring(0, 100)}...`);
@@ -75,7 +86,10 @@ async function testVectorSearch() {
 
   console.log('\n=== Vector Search Test Completed Successfully ===');
   
-  const avgSimilarity = similarConditions.reduce((sum: number, c: any) => sum + c.similarity, 0) / similarConditions.length;
+  const avgSimilarity = similarConditions.reduce(
+    (sum: number, c: ConditionSearchResult) => sum + c.similarity,
+    0
+  ) / similarConditions.length;
   console.log(`Average similarity: ${(avgSimilarity * 100).toFixed(2)}%`);
   console.log(`Performance: ${similarConditions.length} results returned`);
 }
@@ -110,7 +124,7 @@ async function testSearchByText() {
 
   console.log(`Found ${results.length} matching conditions:\n`);
 
-  results.forEach((condition: any, index: number) => {
+  results.forEach((condition: ConditionSearchResult, index: number) => {
     console.log(`${index + 1}. ${condition.name} (DC ${condition.dc_code})`);
     console.log(`   Similarity: ${(condition.similarity * 100).toFixed(2)}%`);
     console.log(`   Description: ${condition.description.substring(0, 100)}...`);

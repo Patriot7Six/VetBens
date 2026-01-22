@@ -1,17 +1,39 @@
 import OpenAI from 'openai';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+const EXPECTED_DIMENSIONS = 1536;
+
+let openaiClient: OpenAI | null = null;
+
+function getOpenAIClient(): OpenAI {
+  if (!openaiClient) {
+    if (!process.env.OPENAI_API_KEY) {
+      throw new Error(
+        'OPENAI_API_KEY is not set. This utility can only be used server-side.'
+      );
+    }
+    openaiClient = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  }
+  return openaiClient;
+}
 
 export async function generateEmbedding(text: string): Promise<number[]> {
+  const openai = getOpenAIClient();
+
   try {
     const response = await openai.embeddings.create({
       model: 'text-embedding-ada-002',
       input: text,
     });
 
-    return response.data[0].embedding;
+    const embedding = response.data[0].embedding;
+
+    if (embedding.length !== EXPECTED_DIMENSIONS) {
+      throw new Error(
+        `Expected ${EXPECTED_DIMENSIONS} dimensions, got ${embedding.length}`
+      );
+    }
+
+    return embedding;
   } catch (error) {
     console.error('Error generating embedding:', error);
     throw error;
@@ -19,11 +41,14 @@ export async function generateEmbedding(text: string): Promise<number[]> {
 }
 
 export async function generateEmbeddingsForConditions(
-  conditions: Array<{ id: string; name: string; description: string }>
+  conditions: Array<{ id: string; name: string; description: string }>,
+  options: { delayMs?: number } = {}
 ): Promise<Array<{ id: string; embedding: number[] }>> {
+  const { delayMs = 100 } = options;
   const results = [];
 
-  for (const condition of conditions) {
+  for (let i = 0; i < conditions.length; i++) {
+    const condition = conditions[i];
     const text = `${condition.name}. ${condition.description}`;
     
     try {
@@ -33,11 +58,18 @@ export async function generateEmbeddingsForConditions(
         embedding,
       });
       
-      console.log(`Generated embedding for: ${condition.name}`);
+      console.log(
+        `[${i + 1}/${conditions.length}] Generated embedding for: ${condition.name}`
+      );
       
-      await new Promise(resolve => setTimeout(resolve, 100));
+      if (i < conditions.length - 1) {
+        await new Promise(resolve => setTimeout(resolve, delayMs));
+      }
     } catch (error) {
-      console.error(`Failed to generate embedding for ${condition.name}:`, error);
+      console.error(
+        `[${i + 1}/${conditions.length}] Failed to generate embedding for ${condition.name}:`,
+        error
+      );
     }
   }
 

@@ -15,9 +15,11 @@ Before running these scripts, ensure you have:
    Update `.env.local` with your credentials:
    ```env
    NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+   SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
    OPENAI_API_KEY=your-openai-api-key
    ```
+   
+   **Note**: Scripts use the `SUPABASE_SERVICE_ROLE_KEY` for administrative operations. This key has elevated privileges and should never be exposed to client-side code.
 
 3. **Dependencies Installed**
    ```bash
@@ -45,8 +47,8 @@ Fetching conditions from database...
 Found 98 conditions without embeddings
 Generating embeddings...
 
-Generated embedding for: Lupus (SLE)
-Generated embedding for: Rheumatoid Arthritis
+[1/98] Generated embedding for: Lupus (SLE)
+[2/98] Generated embedding for: Rheumatoid Arthritis
 ...
 
 Updating database with embeddings...
@@ -115,7 +117,8 @@ Query: "chronic pain and inflammation in joints"
 - Re-run the seed script if you want to add new conditions
 
 ### Error: "Missing Supabase credentials"
-- Check that `.env.local` has the correct `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- Check that `.env.local` has the correct `NEXT_PUBLIC_SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`
+- Get the service role key from: Supabase Dashboard → Settings → API → service_role key (secret)
 
 ### Error: "Missing OpenAI API key"
 - Add `OPENAI_API_KEY` to `.env.local`
