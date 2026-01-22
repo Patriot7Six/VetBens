@@ -76,7 +76,8 @@ Initialize the Next.js project with all required dependencies and configurations
 
 ---
 
-### [ ] Step 2: Supabase Setup & Database Schema
+### [x] Step 2: Supabase Setup & Database Schema
+<!-- chat-id: 19cffd88-33d3-41d0-9c0a-2f5033605775 -->
 
 Set up Supabase project and create database schema.
 
