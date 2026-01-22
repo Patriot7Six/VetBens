@@ -120,7 +120,7 @@ Seed reference data that doesn't change frequently.
 
 ---
 
-### [ ] Step 4: Database Seeding - Conditions Data
+### [x] Step 4: Database Seeding - Conditions Data
 <!-- chat-id: e8d29919-12f9-4053-8ff5-00ecfe8b78a5 -->
 
 Seed initial conditions with DC codes and ratings (start with 50-100 conditions).
