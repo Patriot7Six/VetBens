@@ -52,6 +52,7 @@ Save to `{@artifacts_path}/plan.md`. If the feature is trivial and doesn't warra
 ---
 
 ### [ ] Step 1: Project Setup & Infrastructure
+<!-- chat-id: 0a951927-2d57-410f-930a-37e5901eaa40 -->
 
 Initialize the Next.js project with all required dependencies and configurations.
 
