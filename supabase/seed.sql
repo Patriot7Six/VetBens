@@ -4,21 +4,26 @@
 -- ============================================
 -- CATEGORIES
 -- ============================================
--- Insert 15 comprehensive disability categories
+-- Insert 20 comprehensive disability categories (18 from reference + 2 additional for completeness)
 
 INSERT INTO categories (name, slug, description) VALUES
   ('Autoimmune', 'autoimmune', 'Conditions where the immune system attacks the body''s own tissues'),
   ('Cardiovascular', 'cardiovascular', 'Heart and blood vessel related conditions'),
-  ('Neurological', 'neurological', 'Conditions affecting the brain, spinal cord, and nervous system'),
-  ('Musculoskeletal', 'musculoskeletal', 'Conditions affecting bones, muscles, joints, and connective tissues'),
-  ('Mental Health', 'mental-health', 'Psychiatric and psychological conditions including PTSD, depression, and anxiety'),
-  ('Respiratory', 'respiratory', 'Conditions affecting lungs and breathing'),
-  ('Endocrine', 'endocrine', 'Hormonal and metabolic disorders including diabetes and thyroid conditions'),
-  ('Gastrointestinal', 'gastrointestinal', 'Digestive system conditions affecting stomach, intestines, and related organs'),
+  ('Dental/Oral', 'dental-oral', 'Dental and oral health conditions'),
   ('Dermatological', 'dermatological', 'Skin conditions and disorders'),
+  ('Endocrine', 'endocrine', 'Hormonal disorders including diabetes and thyroid conditions'),
+  ('Gastrointestinal', 'gastrointestinal', 'Digestive system conditions affecting stomach, intestines, and related organs'),
   ('Genitourinary', 'genitourinary', 'Conditions affecting kidneys, bladder, and reproductive organs'),
-  ('Auditory', 'auditory', 'Hearing loss, tinnitus, and ear-related conditions'),
-  ('Visual', 'visual', 'Eye conditions and vision impairments'),
+  ('Gynecological', 'gynecological', 'Women''s reproductive health conditions'),
+  ('Hearing', 'hearing', 'Hearing loss, tinnitus, and ear-related conditions'),
+  ('Mental Health', 'mental-health', 'Psychiatric and psychological conditions including PTSD, depression, and anxiety'),
+  ('Metabolic', 'metabolic', 'Metabolic disorders and conditions'),
+  ('Musculoskeletal', 'musculoskeletal', 'Conditions affecting bones, muscles, joints, and connective tissues'),
+  ('Neurological', 'neurological', 'Conditions affecting the brain, spinal cord, and nervous system'),
+  ('Respiratory', 'respiratory', 'Conditions affecting lungs and breathing'),
+  ('Sleep Disorders', 'sleep-disorders', 'Sleep-related conditions including insomnia and sleep apnea'),
+  ('Vestibular', 'vestibular', 'Balance and inner ear disorders'),
+  ('Vision', 'vision', 'Eye conditions and vision impairments'),
   ('Cancer', 'cancer', 'Malignant neoplasms and cancer-related conditions'),
   ('Infectious Disease', 'infectious-disease', 'Conditions caused by bacterial, viral, or parasitic infections'),
   ('Other', 'other', 'Conditions not classified in other categories')

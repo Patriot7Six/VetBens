@@ -309,12 +309,38 @@ Search input with autocomplete/suggestions.
 **Props**:
 - `value: string`
 - `onChange: (value: string) => void`
+- `onSelect?: (condition: Condition) => void`
 - `placeholder?: string`
 
 **Features**:
 - Debounced search (300ms)
-- Shows recent searches
-- Highlights matching text in suggestions
+- Autocomplete dropdown showing up to 10 suggestions
+- Prefix matching algorithm (searches condition name and DC code)
+- Keyboard navigation (ArrowUp, ArrowDown, Enter, Escape)
+- Click-outside to close dropdown
+- Highlights matching text in suggestions using `<mark>` tag
+- Empty state message when no results found
+
+**Implementation Details**:
+```typescript
+// Debounce hook
+const [debouncedValue] = useDebounce(searchQuery, 300);
+
+// Fetch suggestions
+useEffect(() => {
+  if (debouncedValue.length >= 2) {
+    fetchSuggestions(debouncedValue);
+  }
+}, [debouncedValue]);
+
+// Keyboard handler
+const handleKeyDown = (e: KeyboardEvent) => {
+  if (e.key === 'ArrowDown') setHighlightedIndex(prev => Math.min(prev + 1, suggestions.length - 1));
+  if (e.key === 'ArrowUp') setHighlightedIndex(prev => Math.max(prev - 1, 0));
+  if (e.key === 'Enter' && highlightedIndex >= 0) selectSuggestion(suggestions[highlightedIndex]);
+  if (e.key === 'Escape') closeSuggestions();
+};
+```
 
 #### `CategoryFilter.tsx`
 Category pills/chips for filtering.
@@ -350,16 +376,216 @@ Results panel showing discovered secondary conditions.
 - `results: SecondaryResult[]`
 - `onPrint: () => void`
 - `onShare: () => void`
+- `isLoading?: boolean`
 
 **Features**:
-- Grouped by connection strength
-- Expandable details
-- Connection strength badges (color-coded)
-- Explanation text
+- Grouped by connection strength (Strong → Moderate → Weak)
+- Expandable details (click to expand each condition)
+- Connection strength badges (color-coded: Green/Amber/Slate)
+- Explanation text with potential rating range
+- Empty state when no conditions selected
+- Loading skeleton while fetching results
+
+**Print Functionality Details**:
+```typescript
+// Print handler
+const handlePrint = () => {
+  window.print();
+};
+```
+
+**Print CSS** (in globals.css):
+```css
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  /* Hide header, footer, nav, buttons */
+  header, footer, nav, button, .actions-bar {
+    display: none !important;
+  }
+  
+  /* Show only main content */
+  main {
+    margin: 0;
+    padding: 20px;
+  }
+  
+  /* Prevent page breaks inside condition cards */
+  .condition-card {
+    page-break-inside: avoid;
+  }
+  
+  /* Ensure colors are preserved */
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+```
 
 ---
 
-## 6. Vector Search Strategy
+## 6. Loading States & Error Handling
+
+### Loading States
+
+**Skeleton Screens** (while data loads):
+```typescript
+// ConditionList skeleton
+<div className="space-y-4">
+  {[...Array(6)].map((_, i) => (
+    <div key={i} className="animate-pulse">
+      <div className="h-24 bg-slate-700 rounded-lg" />
+    </div>
+  ))}
+</div>
+
+// SecondaryResults skeleton
+<div className="space-y-3">
+  {[...Array(3)].map((_, i) => (
+    <div key={i} className="animate-pulse">
+      <div className="h-16 bg-slate-700 rounded-lg mb-2" />
+      <div className="h-4 bg-slate-600 rounded w-3/4" />
+    </div>
+  ))}
+</div>
+```
+
+**Spinner Component**:
+```typescript
+// components/ui/Spinner.tsx
+export const Spinner = ({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) => {
+  const sizeClasses = {
+    sm: 'w-4 h-4 border-2',
+    md: 'w-8 h-8 border-3',
+    lg: 'w-12 h-12 border-4',
+  };
+  
+  return (
+    <div className={`${sizeClasses[size]} border-accent border-t-transparent rounded-full animate-spin`} />
+  );
+};
+```
+
+### Error Handling
+
+**Error Boundary** (`app/error.tsx`):
+```typescript
+'use client';
+
+import { useEffect } from 'react';
+
+export default function Error({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
+  useEffect(() => {
+    console.error('Application error:', error);
+  }, [error]);
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-navy">
+      <div className="text-center">
+        <h2 className="text-2xl font-bold text-white mb-4">Something went wrong</h2>
+        <p className="text-gray-300 mb-6">We encountered an error loading this page.</p>
+        <button
+          onClick={reset}
+          className="px-6 py-3 bg-accent text-white rounded-lg hover:bg-accent-dark"
+        >
+          Try again
+        </button>
+      </div>
+    </div>
+  );
+}
+```
+
+**API Error Handling Pattern**:
+```typescript
+// In API routes
+try {
+  const { data, error } = await supabase.from('conditions').select('*');
+  
+  if (error) {
+    console.error('Database error:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch conditions', details: error.message },
+      { status: 500 }
+    );
+  }
+  
+  return NextResponse.json({ conditions: data });
+} catch (error) {
+  console.error('Unexpected error:', error);
+  return NextResponse.json(
+    { error: 'Internal server error' },
+    { status: 500 }
+  );
+}
+```
+
+**Client-Side Error States**:
+```typescript
+// In components
+const [error, setError] = useState<string | null>(null);
+
+// Display error
+{error && (
+  <div className="bg-red-900/20 border border-red-500 rounded-lg p-4 mb-4">
+    <p className="text-red-200">{error}</p>
+    <button 
+      onClick={() => setError(null)}
+      className="text-sm text-red-300 underline mt-2"
+    >
+      Dismiss
+    </button>
+  </div>
+)}
+```
+
+**Empty States**:
+```typescript
+// No search results
+<div className="text-center py-12">
+  <p className="text-gray-400 text-lg mb-2">No conditions found</p>
+  <p className="text-gray-500 text-sm">Try adjusting your search or filters</p>
+</div>
+
+// No secondary conditions
+<div className="text-center py-12">
+  <p className="text-gray-400 text-lg mb-2">No secondary conditions found</p>
+  <p className="text-gray-500 text-sm">Select primary conditions above to discover potential secondary connections</p>
+</div>
+```
+
+**Retry Logic**:
+```typescript
+// Auto-retry on transient failures
+const fetchWithRetry = async (url: string, retries = 3) => {
+  for (let i = 0; i < retries; i++) {
+    try {
+      const response = await fetch(url);
+      if (response.ok) return response;
+      if (response.status >= 500 && i < retries - 1) {
+        await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1))); // Exponential backoff
+        continue;
+      }
+      throw new Error(`HTTP ${response.status}`);
+    } catch (error) {
+      if (i === retries - 1) throw error;
+    }
+  }
+};
+```
+
+---
+
+## 7. Vector Search Strategy
 
 ### Embedding Generation
 1. **Initial Setup**: Generate embeddings for all conditions using OpenAI's `text-embedding-ada-002` model
@@ -537,8 +763,8 @@ OPENAI_API_KEY=your-openai-key
 
 ### Design Decisions & Assumptions
 
-**Categories** (18 total, based on reference images):
-1. All Categories (default filter)
+**Categories** (20 total: 18 from reference images + 2 additional for completeness):
+1. All Categories (default filter in UI)
 2. Autoimmune
 3. Cardiovascular
 4. Dental/Oral
@@ -556,6 +782,11 @@ OPENAI_API_KEY=your-openai-key
 16. Sleep Disorders
 17. Vestibular
 18. Vision
+19. Cancer (additional for completeness)
+20. Infectious Disease (additional for completeness)
+21. Other (catch-all category)
+
+**Note**: Categories 1-18 match the reference site. Categories 19-21 added to ensure comprehensive coverage of all VA disability conditions.
 
 **Connection Strength Badge Colors**:
 - **Weak**: `#94a3b8` (Slate 400)

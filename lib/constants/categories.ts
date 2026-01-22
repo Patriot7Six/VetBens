@@ -12,34 +12,9 @@ export const CATEGORIES: Omit<Category, 'id'>[] = [
     description: 'Heart and blood vessel related conditions',
   },
   {
-    name: 'Neurological',
-    slug: 'neurological',
-    description: 'Conditions affecting the brain, spinal cord, and nervous system',
-  },
-  {
-    name: 'Musculoskeletal',
-    slug: 'musculoskeletal',
-    description: 'Conditions affecting bones, muscles, joints, and connective tissues',
-  },
-  {
-    name: 'Mental Health',
-    slug: 'mental-health',
-    description: 'Psychiatric and psychological conditions including PTSD, depression, and anxiety',
-  },
-  {
-    name: 'Respiratory',
-    slug: 'respiratory',
-    description: 'Conditions affecting lungs and breathing',
-  },
-  {
-    name: 'Endocrine',
-    slug: 'endocrine',
-    description: 'Hormonal and metabolic disorders including diabetes and thyroid conditions',
-  },
-  {
-    name: 'Gastrointestinal',
-    slug: 'gastrointestinal',
-    description: 'Digestive system conditions affecting stomach, intestines, and related organs',
+    name: 'Dental/Oral',
+    slug: 'dental-oral',
+    description: 'Dental and oral health conditions',
   },
   {
     name: 'Dermatological',
@@ -47,18 +22,68 @@ export const CATEGORIES: Omit<Category, 'id'>[] = [
     description: 'Skin conditions and disorders',
   },
   {
+    name: 'Endocrine',
+    slug: 'endocrine',
+    description: 'Hormonal disorders including diabetes and thyroid conditions',
+  },
+  {
+    name: 'Gastrointestinal',
+    slug: 'gastrointestinal',
+    description: 'Digestive system conditions affecting stomach, intestines, and related organs',
+  },
+  {
     name: 'Genitourinary',
     slug: 'genitourinary',
     description: 'Conditions affecting kidneys, bladder, and reproductive organs',
   },
   {
-    name: 'Auditory',
-    slug: 'auditory',
+    name: 'Gynecological',
+    slug: 'gynecological',
+    description: 'Women\'s reproductive health conditions',
+  },
+  {
+    name: 'Hearing',
+    slug: 'hearing',
     description: 'Hearing loss, tinnitus, and ear-related conditions',
   },
   {
-    name: 'Visual',
-    slug: 'visual',
+    name: 'Mental Health',
+    slug: 'mental-health',
+    description: 'Psychiatric and psychological conditions including PTSD, depression, and anxiety',
+  },
+  {
+    name: 'Metabolic',
+    slug: 'metabolic',
+    description: 'Metabolic disorders and conditions',
+  },
+  {
+    name: 'Musculoskeletal',
+    slug: 'musculoskeletal',
+    description: 'Conditions affecting bones, muscles, joints, and connective tissues',
+  },
+  {
+    name: 'Neurological',
+    slug: 'neurological',
+    description: 'Conditions affecting the brain, spinal cord, and nervous system',
+  },
+  {
+    name: 'Respiratory',
+    slug: 'respiratory',
+    description: 'Conditions affecting lungs and breathing',
+  },
+  {
+    name: 'Sleep Disorders',
+    slug: 'sleep-disorders',
+    description: 'Sleep-related conditions including insomnia and sleep apnea',
+  },
+  {
+    name: 'Vestibular',
+    slug: 'vestibular',
+    description: 'Balance and inner ear disorders',
+  },
+  {
+    name: 'Vision',
+    slug: 'vision',
     description: 'Eye conditions and vision impairments',
   },
   {

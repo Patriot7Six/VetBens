@@ -107,15 +107,15 @@ Seed reference data that doesn't change frequently.
 
 **Tasks**:
 - Create seed file: `supabase/seed.sql`
-- Seed 13+ categories (Autoimmune, Cardiovascular, Neurological, etc.)
-- Seed VSO organizations (DAV, American Legion, VFW)
+- Seed 20 categories (18 from reference + Cancer, Infectious Disease, Other)
+- Seed VSO organizations (DAV, American Legion, VFW, AMVETS, VVA, PVA)
 - Run seed script in Supabase
 - Create constants file: `lib/constants/categories.ts`
 - Create constants file: `lib/constants/vso.ts`
 
 **Verification**:
-- Query categories table: should have 13+ records
-- Query vso_organizations table: should have 3+ records
+- Query categories table: should have 20 records
+- Query vso_organizations table: should have 6 records
 - Constants files export correct data
 
 ---
@@ -145,16 +145,20 @@ Seed initial conditions with DC codes and ratings (start with 50-100 conditions)
 Generate and store embeddings for all conditions.
 
 **Tasks**:
-- Create embedding utility: `lib/utils/embeddings.ts`
-- Create script to generate embeddings using OpenAI API
-- Update conditions table with embeddings
-- Verify vector index is working
-- Test vector search function
+- ✅ Create embedding utility: `lib/utils/embeddings.ts`
+- ✅ Create script to generate embeddings using OpenAI API
+- ⚠️ **PENDING**: Update conditions table with embeddings (user must run script)
+- ⚠️ **PENDING**: Verify vector index is working
+- ⚠️ **PENDING**: Test vector search function
 
-**Verification**:
+**Status**: Infrastructure complete. User must run `npm run generate-embeddings` with valid OpenAI API key to populate embeddings.
+
+**Verification** (after running script):
 - All conditions have embeddings (1536 dimensions)
 - Vector search returns similar conditions
 - Performance is acceptable (< 500ms for search)
+
+**Note**: See `EMBEDDINGS_SETUP.md` for detailed instructions on generating embeddings.
 
 ---
 
