@@ -535,6 +535,43 @@ OPENAI_API_KEY=your-openai-key
 
 ## 10. Design System (Tailwind Config)
 
+### Design Decisions & Assumptions
+
+**Categories** (18 total, based on reference images):
+1. All Categories (default filter)
+2. Autoimmune
+3. Cardiovascular
+4. Dental/Oral
+5. Dermatological
+6. Endocrine
+7. Gastrointestinal
+8. Genitourinary
+9. Gynecological
+10. Hearing
+11. Mental Health
+12. Metabolic
+13. Musculoskeletal
+14. Neurological
+15. Respiratory
+16. Sleep Disorders
+17. Vestibular
+18. Vision
+
+**Connection Strength Badge Colors**:
+- **Weak**: `#94a3b8` (Slate 400)
+- **Moderate**: `#f59e0b` (Amber 500) - Gold/yellow as shown in reference
+- **Strong**: `#10b981` (Emerald 500) - Green
+
+**DC Code Format**: "DC 6350" (space after "DC")
+
+**Share Functionality**: Copy URL to clipboard only (simple implementation)
+
+**Data Sourcing Strategy**: 
+- Start with ~50-100 core conditions covering major categories
+- Iteratively expand to 321+ conditions
+- Manually curate from VA.gov resources and medical databases
+- Secondary relationships initially based on medical literature
+
 ### Color Palette (Based on Reference Site)
 ```javascript
 // tailwind.config.ts
@@ -545,13 +582,24 @@ OPENAI_API_KEY=your-openai-key
         primary: {
           50: '#f0f9ff',
           100: '#e0f2fe',
-          // ... navy/dark blue palette
-          900: '#0c1e2e', // Dark navy
+          200: '#bae6fd',
+          300: '#7dd3fc',
+          400: '#38bdf8',
+          500: '#0ea5e9',
+          600: '#0284c7',
+          700: '#0369a1',
+          800: '#075985',
+          900: '#0c1e2e', // Dark navy background
         },
         accent: {
-          DEFAULT: '#f59e0b', // Orange/amber
+          DEFAULT: '#f59e0b', // Orange/amber for CTAs and highlights
           light: '#fbbf24',
           dark: '#d97706',
+        },
+        connection: {
+          weak: '#94a3b8', // Slate
+          moderate: '#f59e0b', // Amber
+          strong: '#10b981', // Emerald
         },
         success: '#10b981',
         warning: '#f59e0b',
