@@ -1,8 +1,20 @@
 import { HTMLAttributes, forwardRef } from 'react';
 import { cn } from '@/lib/utils/cn';
 
+/**
+ * Card component for grouping related content.
+ * Supports multiple variants and composable sub-components.
+ * 
+ * @example
+ * <Card variant="elevated" hover>
+ *   <CardHeader>
+ *     <CardTitle>Title</CardTitle>
+ *   </CardHeader>
+ *   <CardContent>Content here</CardContent>
+ * </Card>
+ */
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
-  variant?: 'default' | 'elevated' | 'outlined';
+  variant?: 'default' | 'elevated' | 'outline';
   padding?: 'none' | 'sm' | 'md' | 'lg';
   hover?: boolean;
 }
@@ -13,8 +25,8 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
     
     const variants = {
       default: 'bg-white border border-gray-200',
-      elevated: 'bg-white shadow-md hover:shadow-lg',
-      outlined: 'bg-transparent border-2 border-gray-300',
+      elevated: 'bg-white shadow-md',
+      outline: 'bg-transparent border-2 border-gray-300',
     };
 
     const paddings = {
