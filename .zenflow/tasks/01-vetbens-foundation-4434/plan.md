@@ -281,7 +281,8 @@ Build category filtering UI.
 
 ---
 
-### [ ] Step 12: Condition Card & List Components
+### [x] Step 12: Condition Card & List Components
+<!-- chat-id: 37daa7a7-a21a-434a-aa55-075ce6602beb -->
 
 Build components to display individual conditions and lists.
 
