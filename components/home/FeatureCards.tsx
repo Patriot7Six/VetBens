@@ -25,7 +25,8 @@ export default function FeatureCards() {
       {features.map((feature) => (
         <Card
           key={feature.title}
-          className="text-center py-10 px-6 bg-navy-light border border-primary-700 hover:border-primary-600 transition-colors"
+          padding="lg"
+          className="text-center bg-navy-light border border-navy-light hover:border-orange transition-colors"
         >
           <div className="flex justify-center mb-6">
             <feature.icon className="text-orange text-5xl" />
