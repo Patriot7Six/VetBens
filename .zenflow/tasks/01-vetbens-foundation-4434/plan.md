@@ -261,7 +261,7 @@ Build search functionality with autocomplete.
 
 ---
 
-### [ ] Step 11: Category Filter Component
+### [x] Step 11: Category Filter Component
 <!-- chat-id: f761d6f7-bdfe-4656-aadc-121ce5cac91d -->
 
 Build category filtering UI.
