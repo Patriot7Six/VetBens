@@ -1,0 +1,6 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M20 2L4 10V18C4 27.941 10.84 36.736 20 38.5C29.16 36.736 36 27.941 36 18V10L20 2Z" fill="#D4AF37" stroke="#B8941F" stroke-width="1"/>
+  <path d="M20 5L7 11.5V18C7 26.284 12.665 33.571 20 35.5C27.335 33.571 33 26.284 33 18V11.5L20 5Z" fill="#0c1e2e"/>
+  <text x="20" y="24" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#D4AF37" text-anchor="middle">7</text>
+  <text x="20" y="32" font-family="Arial, sans-serif" font-size="6" font-weight="bold" fill="#B8941F" text-anchor="middle">SIX</text>
+</svg>
